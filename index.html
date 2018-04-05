@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>C++ - the Newest Old Language</title>
+
+    <link rel="stylesheet" href="reveal.js/css/reveal.css">
+    <link rel="stylesheet" href="reveal.js/css/theme/black.css">
+
+    <style>
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4,
+        .reveal h5,
+        .reveal h6 {
+            font-family: "Liberation Sans", Helvetica, sans-serif !important;
+        }
+
+    </style>
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="reveal.js/lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section data-background="GOTO_Intro.png"></section>
+        <!-------------->
+
+        <section data-background="GOTO_bg.png">
+            <h1>C++<br>the Newest Old Language</h1>
+            <h2>Matt Godbolt</h2>
+        </section>
+
+        <section>
+            C++ - who uses it?
+        </section>
+        <section>
+            <h3>C++ strengths</h3>
+            <ul>
+                <li>Value types</li>
+                <li>Clear object lifetimes</li>
+                <li>Performance</li>
+            </ul>
+        </section>
+        <section data-background="GOTO_bg.png">
+            <pre><code data-trim>
+                string fetch(string resource) {
+                    Fetcher fetcher;
+                    Response *response = fetcher->fetch(resource);
+                    if (response->succeeded())
+                        return response->asString();
+                    throw UnableToFetch();
+                }
+            </code></pre>
+        </section>
+
+        <section data-background="GOTO_bg.png">
+
+        </section>
+
+        <!-------------->
+        <section data-background="Outro_Remember_To_Rate.png"></section>
+    </div>
+</div>
+
+<script src="reveal.js/lib/js/head.min.js"></script>
+<script src="reveal.js/js/reveal.js"></script>
+
+<script>
+    Reveal.initialize({
+        history: true,
+        transition: 'fase',
+        slideNumber: true,
+        dependencies: [
+            {src: 'reveal.js/plugin/markdown/marked.js'},
+            {src: 'reveal.js/plugin/markdown/markdown.js'},
+            {src: 'reveal.js/plugin/notes/notes.js', async: true},
+            {
+                src: 'reveal.js/plugin/highlight/highlight.js', async: true, callback: function () {
+                    hljs.initHighlightingOnLoad();
+                }
+            }
+        ]
+    });
+</script>
+</body>
+</html>

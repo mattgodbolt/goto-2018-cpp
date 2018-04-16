@@ -39,14 +39,18 @@
         <!-------------->
 
         <section data-background="GOTO_bg.png">
+            <!-- TODO this looks ghetto -->
             <h1>C++<br>the Newest Old Language</h1>
             <h2>Matt Godbolt</h2>
         </section>
 
-        <section>
+        <section data-background="GOTO_bg.png">
             C++ - who uses it?
         </section>
-        <section>
+        <section data-background="GOTO_bg.png">
+            But why C++?
+        </section>
+        <section data-background="GOTO_bg.png">
             <h3>C++ strengths</h3>
             <ul>
                 <li>Value types</li>
@@ -55,19 +59,88 @@
             </ul>
         </section>
         <section data-background="GOTO_bg.png">
+            <!-- TODO huge compiler error. Segfault pic -->
+            But isn't C++ the one with the horrible error messages and all the crashing?
+        </section>
+        <section data-background="GOTO_bg.png">
+            <!-- TODO cartoons? -->
+            That's old C++! New C++ is better!
+        </section>
+        <section data-background="GOTO_bg.png">
+            <table>
+                <tr>
+                    <th>Era</th>
+                    <th>Highlights</th>
+                </tr>
+                <tr>
+                    <th>C++98</th>
+                    <td>memory leaks, use-after-free...</td>
+                </tr>
+                <tr class="fragment">
+                    <th>C++11</th>
+                    <td>
+                        <code>auto</code>, smart pointers, lambdas, <code>constexpr</code>, atomics, UDLs...
+                    </td>
+                </tr>
+                <tr class="fragment">
+                    <th>C++14</th>
+                    <td>return type deduction, better lambdas</td>
+                </tr>
+                <tr class="fragment">
+                    <th>C++17</th>
+                    <td>
+                        <code>if constexpr</code>, <code>optional</code>, <code>string_view</code>, <code>variant</code>
+                    </td>
+                </tr>
+            </table>
+        </section>
+        <!-- TODO cppbestpractices -->
+        <section  data-background="GOTO_bg.png">
+            <h3>Value types</h3>
+            <!-- TODO highlight areas, talk about them -->
             <pre><code data-trim>
-                string fetch(string resource) {
-                    Fetcher fetcher;
-                    Response *response = fetcher->fetch(resource);
-                    if (response->succeeded())
-                        return response->asString();
-                    throw UnableToFetch();
-                }
+class Pos {
+  float x{};
+  float y{};
+public:
+  constexpr Pos() = default;
+  constexpr Pos(float x, float y)
+    : x(x), y(y) {}
+  constexpr Pos operator +(Pos other) const {
+      return Pos(x + other.x, y + other.y);
+  }
+  // and so on for other operators...
+};
             </code></pre>
         </section>
+        <section data-background="GOTO_bg.png">
+            <h3>Performance</h3>
+            <pre><code data-trim>
+Pos midPoint(const vector&lt;Pos> &vec) {
+  auto total = accumulate(begin(vec), end(vec), Pos());
+  return total / vec.size();
+}
+            </code></pre>
+            <!-- TODO, check skylake output, and understand it...
+            probably unrolling too crazily?
+            https://godbolt.org/g/93HDBF
+            -->
+        </section>
+
+        <!-- bit more details -->
+        <!-- RAII, memory, files? -->
+        <!-- lambdas -->
+        <!-- if constexpr stuff? -->
+        <!-- constexpr stuff? -->
+        <!-- compilers and tooling -->
 
         <section data-background="GOTO_bg.png">
-
+            <h3>More resources</h3>
+            <ul>
+                <li>cppbestpractices TODO</li>
+                <li>standard stuff</li>
+                <li>sanitizers</li>
+            </ul>
         </section>
 
         <!-------------->

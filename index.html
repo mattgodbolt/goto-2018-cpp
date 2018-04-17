@@ -19,6 +19,15 @@
             font-family: "Liberation Sans", Helvetica, sans-serif !important;
         }
 
+        .reveal .slides section .fragment.highlight-current-code {
+            opacity: 1;
+            visibility: inherit;
+        }
+
+        .reveal .slides section .fragment.highlight-current-code.current-fragment {
+            background: #555a5f;
+        }
+
     </style>
     <!-- Theme used for syntax highlighting of code -->
     <link rel="stylesheet" href="reveal.js/lib/css/zenburn.css">
@@ -45,11 +54,28 @@
         </section>
 
         <section data-background="GOTO_bg.png">
-            C++ - who uses it?
+            <h3>Who uses C++?</h3>
+            <ul class="fragment">
+                <li>Games</li>
+                <li>Finance</li>
+                <li>Embedded devices</li>
+                <li>Servers</li>
+            </ul>
+            <aside class="notes">
+                Ask the audience - do <i>you</i> use C++? What languages do you use if not?
+                These are the places I've used C++ in my 20+ years of professional programming.
+                I'm sure there's more out there.
+            </aside>
         </section>
         <section data-background="GOTO_bg.png">
-            But why C++?
+            <h3>But why C++?</h3>
+            <aside class="notes">
+                Why do we use C++? Probably performance, or to interoperate with hardware easily.
+                Or because you've inherited a C++ codebase.
+                Let's take a look at C++'s strengths.
+            </aside>
         </section>
+        <!-- TODO should this be here? -->
         <section data-background="GOTO_bg.png">
             <h3>C++ strengths</h3>
             <ul>
@@ -60,11 +86,20 @@
         </section>
         <section data-background="GOTO_bg.png">
             <!-- TODO huge compiler error. Segfault pic -->
-            But isn't C++ the one with the horrible error messages and all the crashing?
+            <div>
+                "But isn't C++ the language with the horrible error messages and all the crashing?"
+            </div>
         </section>
         <section data-background="GOTO_bg.png">
             <!-- TODO cartoons? -->
             That's old C++! New C++ is better!
+            <aside class="notes">
+                Ok this is going to be a bit evangelical. Modern C++ is not perfect, but it's a huge
+                improvement over what you might remember C++ as, if you never used it
+            </aside>
+        </section>
+        <section data-background="GOTO_bg.png">
+            <h3>So, what's changed?</h3>
         </section>
         <section data-background="GOTO_bg.png">
             <table>
@@ -74,7 +109,7 @@
                 </tr>
                 <tr>
                     <th>C++98</th>
-                    <td>memory leaks, use-after-free...</td>
+                    <td>memory leaks, use-after-free, crashes...</td>
                 </tr>
                 <tr class="fragment">
                     <th>C++11</th>
@@ -92,24 +127,36 @@
                         <code>if constexpr</code>, <code>optional</code>, <code>string_view</code>, <code>variant</code>
                     </td>
                 </tr>
+                <tr class="fragment">
+                    <th>C++20</th>
+                    <td>
+                        Concepts, ranges, coroutines... maybe?
+                    </td>
+                </tr>
             </table>
         </section>
-        <!-- TODO cppbestpractices -->
-        <section  data-background="GOTO_bg.png">
+        <section data-background="GOTO_bg.png">
             <h3>Value types</h3>
-            <!-- TODO highlight areas, talk about them -->
-            <pre><code data-trim>
+            <ul>
+                <li>Passed by value</li>
+                <li>Zero overhead</li>
+                <li>Position, error code, prices, quantities, times...</li>
+                <li>Strong typing</li>
+            </ul>
+        </section>
+        <section data-background="GOTO_bg.png">
+            <h3>Value types</h3>
+            <pre><code data-trim data-noescape>
 class Pos {
-  float x{};
-  float y{};
-public:
-  constexpr Pos() = default;
-  constexpr Pos(float x, float y)
+<div class="fragment highlight-current-code">  float x{};
+  float y{};</div>public:
+<div class="fragment highlight-current-code">  constexpr Pos() = default;
+</div><div class="fragment highlight-current-code">  constexpr Pos(float x, float y)
     : x(x), y(y) {}
-  constexpr Pos operator +(Pos other) const {
+</div><div class="fragment highlight-current-code">  constexpr Pos operator +(Pos other) const {
       return Pos(x + other.x, y + other.y);
   }
-  // and so on for other operators...
+</div>  // and so on for other operators...
 };
             </code></pre>
         </section>
@@ -133,12 +180,16 @@ Pos midPoint(const vector&lt;Pos> &vec) {
         <!-- if constexpr stuff? -->
         <!-- constexpr stuff? -->
         <!-- compilers and tooling -->
+        <!-- honourable mention of Rust -->
+        <!-- TODO try and highlight constexpr -->
+        <!-- TODO cppbestpractices -->
 
         <section data-background="GOTO_bg.png">
             <h3>More resources</h3>
             <ul>
                 <li>cppbestpractices TODO</li>
                 <li>standard stuff</li>
+                <li>guidelines</li>
                 <li>sanitizers</li>
             </ul>
         </section>

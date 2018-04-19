@@ -28,6 +28,12 @@
             background: #555a5f;
         }
 
+        .no-border {
+            background: none !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+
     </style>
     <!-- Theme used for syntax highlighting of code -->
     <link rel="stylesheet" href="reveal.js/lib/css/zenburn.css">
@@ -49,8 +55,8 @@
 
         <section data-background="GOTO_bg.png">
             <!-- TODO this looks ghetto -->
-            <h1>C++<br>the Newest Old Language</h1>
-            <h2>Matt Godbolt</h2>
+            <h2><img class="no-border" src="cpp_logo.svg"><br>the Newest Old Language</h2>
+            <h5>Matt Godbolt</h5>
         </section>
 
         <section data-background="GOTO_bg.png">
@@ -79,7 +85,7 @@
         <section data-background="GOTO_bg.png">
             <h3>C++ strengths</h3>
             <ul>
-                <li>Value types</li>
+                <li>Value types</li><!--- TODO literal types? --->
                 <li>Clear object lifetimes</li>
                 <li>Performance</li>
             </ul>
@@ -114,7 +120,7 @@
                 <tr class="fragment">
                     <th>C++11</th>
                     <td>
-                        <code>auto</code>, smart pointers, lambdas, <code>constexpr</code>, atomics, UDLs...
+                        <code>auto</code>, range-<code>for</code>, smart pointers, lambdas, <code>constexpr</code>, atomics, UDLs...
                     </td>
                 </tr>
                 <tr class="fragment">
@@ -161,32 +167,63 @@ class Pos {
             </code></pre>
         </section>
         <section data-background="GOTO_bg.png">
+            <h3>Clear object lifetimes</h3>
+            <pre><code data-trim>
+string queryDb(const string &amp;q) {
+  DbConnection conn("server", 9000);
+  return conn.query(q);
+}
+            </code></pre>
+        </section>
+        <section data-background="GOTO_bg.png">
+            <h3>Clear object lifetimes</h3>
+            <pre><code data-trim>
+class Document {
+  vector&lt;unique_ptr&lt;Elem>> objects_;
+public:
+  void add(unique_ptr&ltElem> &amp;&amp;object) {
+    objects_.emplace_back(move(object));
+  }
+};
+            </code></pre>
+        </section>
+        <section data-background="GOTO_bg.png">
             <h3>Performance</h3>
             <pre><code data-trim>
-Pos midPoint(const vector&lt;Pos> &vec) {
+auto midPoint(const vector&lt;Pos> &amp;vec) {
   auto total = accumulate(begin(vec), end(vec), Pos());
   return total / vec.size();
 }
             </code></pre>
             <!-- TODO, check skylake output, and understand it...
             probably unrolling too crazily?
-            https://godbolt.org/g/93HDBF
+            https://godbolt.org/g/DWV99J
+            https://godbolt.org/g/o4S2rN -- skylake clang, clever recip stuff
             -->
         </section>
-
-        <!-- bit more details -->
-        <!-- RAII, memory, files? -->
-        <!-- lambdas -->
-        <!-- if constexpr stuff? -->
-        <!-- constexpr stuff? -->
-        <!-- compilers and tooling -->
-        <!-- honourable mention of Rust -->
-        <!-- TODO try and highlight constexpr -->
-        <!-- TODO cppbestpractices -->
-
         <section data-background="GOTO_bg.png">
-            <h3>More resources</h3>
+            <h3>But wait, there's more!</h3>
+        </section>
+        <section  data-background="GOTO_bg.png">
+            <h3>Compilers</h3>
+        </section>
+        <section  data-background="GOTO_bg.png">
+            <h3>Sanitizers</h3>
+        </section>
+        <section data-background="GOTO_bg.png">
+            <h3>Smart editors</h3>
             <ul>
+                <!-- TODO screenshots -->
+                <li>vim/emacs &amp; <a href="https://valloric.github.io/YouCompleteMe/">YouCompleteMe</a></li>
+                <li><a href="https://www.jetbrains.com/clion">JetBrains CLion</a></li>
+                <li><a href="https://www.eclipse.org/cdt/">Eclipse CDT</a></li>
+            </ul>
+        </section>
+        <section data-background="GOTO_bg.png">
+            <h3>Community support</h3>
+            <ul>
+                <li>Thriving Slack</li>
+                <li>http://www.includecpp.org/ TODO</li>
                 <li>cppbestpractices TODO</li>
                 <li>standard stuff</li>
                 <li>guidelines</li>

@@ -26,6 +26,7 @@
 
         .reveal .slides section .fragment.highlight-current-code.current-fragment {
             background: #555a5f;
+            color: #ffffff;
         }
 
         .no-border {
@@ -55,7 +56,7 @@
 
         <section data-background="GOTO_bg.png">
             <!-- TODO this looks ghetto -->
-            <h2><img class="no-border" src="cpp_logo.svg"><br>the Newest Old Language</h2>
+            <h3><img class="no-border" src="cpp_logo.svg"><br>the Newest Old Language</h3>
             <h5>Matt Godbolt</h5>
         </section>
 
@@ -120,7 +121,8 @@
                 <tr class="fragment">
                     <th>C++11</th>
                     <td>
-                        <code>auto</code>, range-<code>for</code>, smart pointers, lambdas, <code>constexpr</code>, atomics, UDLs...
+                        <code>auto</code>, range-<code>for</code>, smart pointers, lambdas, <code>constexpr</code>,
+                        atomics, UDLs...
                     </td>
                 </tr>
                 <tr class="fragment">
@@ -152,7 +154,7 @@
         </section>
         <section data-background="GOTO_bg.png">
             <h3>Value types</h3>
-            <pre><code data-trim data-noescape>
+            <pre><code data-trim data-noescape class="cpp">
 class Pos {
 <div class="fragment highlight-current-code">  float x{};
   float y{};</div>public:
@@ -168,33 +170,34 @@ class Pos {
         </section>
         <section data-background="GOTO_bg.png">
             <h3>Clear object lifetimes</h3>
-            <pre><code data-trim>
+            <pre><code data-trim data-noescape class="cpp">
 string queryDb(const string &amp;q) {
-  DbConnection conn("server", 9000);
-  return conn.query(q);
-}
+<div class="fragment highlight-current-code">  DbConnection conn("server", 9000);
+</div><div class="fragment highlight-current-code">  return conn.query(q);
+</div>}
             </code></pre>
         </section>
         <section data-background="GOTO_bg.png">
             <h3>Clear object lifetimes</h3>
-            <pre><code data-trim>
+            <pre><code data-trim data-noescape class="cpp">
 class Document {
-  vector&lt;unique_ptr&lt;Elem>> objects_;
-public:
-  void add(unique_ptr&ltElem> &amp;&amp;object) {
-    objects_.emplace_back(move(object));
+<div class="fragment highlight-current-code">  vector&lt;unique_ptr&lt;Elem>> objects_;
+</div>public:
+  void add(unique_ptr&ltElem> <span class="fragment highlight-current-code">&amp;&amp;</span>object) {
+    objects_.emplace_back(<span class="fragment highlight-current-code">move(object)</span>);
   }
 };
             </code></pre>
         </section>
         <section data-background="GOTO_bg.png">
             <h3>Performance</h3>
-            <pre><code data-trim>
+            <pre><code data-trim class="cpp">
 auto midPoint(const vector&lt;Pos> &amp;vec) {
   auto total = accumulate(begin(vec), end(vec), Pos());
   return total / vec.size();
 }
             </code></pre>
+            <div class="fragment"><a href="https://godbolt.org/g/o4S2rN">Compiler Explorer link</a></div>
             <!-- TODO, check skylake output, and understand it...
             probably unrolling too crazily?
             https://godbolt.org/g/DWV99J
@@ -204,31 +207,65 @@ auto midPoint(const vector&lt;Pos> &amp;vec) {
         <section data-background="GOTO_bg.png">
             <h3>But wait, there's more!</h3>
         </section>
-        <section  data-background="GOTO_bg.png">
+        <section data-background="GOTO_bg.png">
             <h3>Compilers</h3>
+            <ul>
+                <li>Clang</li>
+                <li>GCC</li>
+                <li>icc</li>
+                <li>MSVC</li>
+            </ul>
         </section>
-        <section  data-background="GOTO_bg.png">
+        <section data-background="GOTO_bg.png">
             <h3>Sanitizers</h3>
+            <ul>
+                <li>Memory accesses</li>
+                <li>Undefined behaviour</li>
+                <li>Thread safety</li>
+            </ul>
+        </section>
+        <section data-background="GOTO_bg.png">
+            <h3>Sanitizers</h3>
+            <pre><code data-trim class="cpp">
+int main(int argc, const char *argv[]) {
+   char array[10]{};
+   return array[11];
+}
+            </code></pre>
+        </section>
+        <section data-background="GOTO_bg.png">
+            <h3>Sanitizers</h3>
+            <img class="stretch" src="sanitize.png">
         </section>
         <section data-background="GOTO_bg.png">
             <h3>Smart editors</h3>
             <ul>
-                <!-- TODO screenshots -->
                 <li>vim/emacs &amp; <a href="https://valloric.github.io/YouCompleteMe/">YouCompleteMe</a></li>
                 <li><a href="https://www.jetbrains.com/clion">JetBrains CLion</a></li>
                 <li><a href="https://www.eclipse.org/cdt/">Eclipse CDT</a></li>
             </ul>
         </section>
         <section data-background="GOTO_bg.png">
+            <h3>Smart editors</h3>
+            <img src="vim.png">
+        </section>
+        <section data-background="GOTO_bg.png">
+            <h3>Smart editors</h3>
+            <img src="CLion.png">
+        </section>
+        <section data-background="GOTO_bg.png">
             <h3>Community support</h3>
             <ul>
-                <li>Thriving Slack</li>
-                <li>http://www.includecpp.org/ TODO</li>
-                <li>cppbestpractices TODO</li>
-                <li>standard stuff</li>
-                <li>guidelines</li>
-                <li>sanitizers</li>
+                <li><a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md">Core guidelines</a></li>
+                <li><a href="https://github.com/Microsoft/GSL">Guideline support library</a></li>
+                <li>Thriving <a href="https://cpplang.now.sh/">Slack</a></li>
+                <li><a href="http://www.includecpp.org/"><code>#include&lt;C++&gt;</code></a></li>
+                <li><a href="https://github.com/lefticus/cppbestpractices">cppbestpractices</a></li>
             </ul>
+        </section>
+        <section data-background="GOTO_bg.png">
+            <h3>What are you waiting for?</h3>
+            <h5>Give C++ a try now!</h5>
         </section>
 
         <!-------------->

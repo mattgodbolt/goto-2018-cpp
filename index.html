@@ -55,7 +55,6 @@
         <!-------------->
 
         <section data-background="GOTO_bg.png">
-            <!-- TODO this looks ghetto -->
             <h3><img class="no-border" src="cpp_logo.svg"><br>the Newest Old Language</h3>
             <h5>Matt Godbolt</h5>
         </section>
@@ -99,51 +98,114 @@
         </section>
         <section data-background="GOTO_bg.png">
             <!-- TODO cartoons? -->
-            That's old C++! New C++ is better!
+            <div>That's old C++!</div>
+            <div>New C++ is better!</div>
             <aside class="notes">
                 Ok this is going to be a bit evangelical. Modern C++ is not perfect, but it's a huge
                 improvement over what you might remember C++ as, if you never used it
             </aside>
         </section>
         <section data-background="GOTO_bg.png">
-            <h3>So, what's changed?</h3>
+            <div>So, what's changed?</div>
         </section>
         <section data-background="GOTO_bg.png">
-            <table>
-                <tr>
-                    <th>Era</th>
-                    <th>Highlights</th>
-                </tr>
-                <tr>
-                    <th>C++98</th>
-                    <td>memory leaks, use-after-free, crashes...</td>
-                </tr>
-                <tr class="fragment">
-                    <th>C++11</th>
-                    <td>
-                        <code>auto</code>, range-<code>for</code>, lambdas, move, smart pointers, <code>constexpr</code>,
-                        atomics, UDLs...
-                    </td>
-                </tr>
-		<!-- TODO maybe example of auto iterating over array?
-	  then transform? -->
-                <tr class="fragment">
-                    <th>C++14</th>
-                    <td>return type deduction, better lambdas</td>
-                </tr>
-                <tr class="fragment">
-                    <th>C++17</th>
-                    <td>
-                        <code>if constexpr</code>, <code>optional</code>, <code>variant</code>, <code>string_view</code>
-                    </td>
-                </tr>
-                <tr class="fragment">
-                    <th>C++20</th>
-                    <td>
-                        Concepts, ranges, coroutines... maybe?
-                    </td>
-                </tr>
-            </table>
+            <section>
+                <table>
+                    <tr>
+                        <th>Era</th>
+                        <th>Highlights</th>
+                    </tr>
+                    <tr>
+                        <th>C++98</th>
+                        <td>memory leaks, use-after-free, crashes...</td>
+                    </tr>
+                    <tr class="fragment">
+                        <th>C++11</th>
+                        <td>
+                            <code>auto</code>, range-<code>for</code>, lambdas, move, smart pointers,
+                            <code>constexpr</code>,
+                            atomics, UDLs...
+                        </td>
+                    </tr>
+                    <!-- TODO maybe example of auto iterating over array?
+                  then transform? -->
+                    <tr class="fragment">
+                        <th>C++14</th>
+                        <td>return type deduction, better lambdas</td>
+                    </tr>
+                    <tr class="fragment">
+                        <th>C++17</th>
+                        <td>
+                            <code>if constexpr</code>, <code>optional</code>, <code>variant</code>,
+                            <code>string_view</code>
+                        </td>
+                    </tr>
+                    <tr class="fragment">
+                        <th>C++20</th>
+                        <td>
+                            Concepts, ranges, coroutines... maybe?
+                        </td>
+                    </tr>
+                </table>
+            </section>
+            <!-- https://godbolt.org/g/okPnht -->
+            <section>
+                <pre><code data-trim data-noescape class="cpp">
+double rms(const vector&lt;double> &v) {
+  double sum = 0.0;
+  for (<span class="fragment highlight-current-code">vector&lt;double>::const_iterator</span> i = v.begin();
+       i != v.end();
+       i++) {
+    sum += *i * *i;
+  }
+  return sqrt(sum);
+}
+                </code></pre>
+            </section>
+            <section>
+                <pre><code data-trim data-noescape class="cpp">
+double rms(const vector&lt;double> &v) {
+  double sum = 0.0;
+  for (<span class="fragment highlight-current-code">auto</span> i = v.begin(); i != v.end(); i++) {
+    sum += *i * *i;
+  }
+  return sqrt(sum);
+}
+                </code></pre>
+            </section>
+            <section>
+                <pre><code data-trim data-noescape class="cpp">
+double rms(const vector&lt;double> &v) {
+  double sum = 0.0;
+<div class="fragment highlight-current-code">  for (auto i : v)
+    sum += i * i;
+</div>  return sqrt(sum);
+}                </code></pre>
+            </section>
+            <section>
+                <pre><code data-trim data-noescape class="cpp">
+<div class="fragment highlight-current-code">static double accum(double partialSum, double elem) {
+    return partialSum + elem * elem;
+}
+</div>double rms(const vector&lt;double> &v) {
+  return sqrt(accumulate(
+        v.begin(), v.end(), 0.0, accum));
+}                </code></pre>
+            </section>
+            <section>
+                <pre><code data-trim data-noescape class="cpp">
+double rms(const vector&lt;double> &v) {
+  return sqrt(accumulate(
+      v.begin(), v.end(), 0.0,
+<div class="fragment highlight-current-code">      [](double partialSum, double elem) {
+          return partialSum + elem * elem;
+      }
+</div>  ));
+}                </code></pre>
+            </section>
+        </section>
+        <section data-background="GOTO_bg.png">
+            <h3>Why C++?</h3>
         </section>
         <section data-background="GOTO_bg.png">
             <h3>Value types</h3>
@@ -169,6 +231,9 @@ class Pos {
 </div>  // and so on for other operators...
 };
             </code></pre>
+            <aside class="notes">
+                Highlight the "new C++" parts. TODO value type, UDLs
+            </aside>
         </section>
         <section data-background="GOTO_bg.png">
             <h3>Clear object lifetimes</h3>
@@ -258,10 +323,11 @@ int main(int argc, const char *argv[]) {
         <section data-background="GOTO_bg.png">
             <h3>Community support</h3>
             <ul>
-                <li><a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md">Core guidelines</a></li>
+                <li><a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md">Core
+                    guidelines</a></li>
                 <li><a href="https://github.com/Microsoft/GSL">Guideline support library</a></li>
-                <li>Thriving <a href="https://cpplang.now.sh/">Slack</a></li>
                 <li><a href="http://www.includecpp.org/"><code>#include&lt;C++&gt;</code></a></li>
+                <li><a href="https://cpplang.now.sh/">Slack</a></li>
                 <li><a href="https://github.com/lefticus/cppbestpractices">cppbestpractices</a></li>
             </ul>
         </section>

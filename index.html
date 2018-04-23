@@ -208,13 +208,40 @@ double rms(const vector&lt;double> &v) {
             <h3>Why C++?</h3>
         </section>
         <section data-background="GOTO_bg.png">
-            <h3>Value types</h3>
-            <ul>
-                <li>Passed by value</li>
-                <li>Zero overhead</li>
-                <li>Position, error code, prices, quantities, times...</li>
-                <li>Strong typing</li>
-            </ul>
+            <section>
+                <h3>Value types</h3>
+                <ul>
+                    <li>Passed by value</li>
+                    <li>Zero overhead</li>
+                    <li>Position, error code, prices, quantities, times...</li>
+                    <li>Strong typing</li>
+                </ul>
+            </section>
+            <section>
+<pre><code data-trim data-noescape class="cpp">
+void buyShares(const char *symbol,
+               double price,
+               int quantity);
+
+buyShares("GOOG", 800, 975.0); <span class="fragment">// whoops!</span>
+            </code></pre>
+            </section>
+            <section>
+<pre><code data-trim data-noescape class="cpp">
+void buyShares(const char *symbol,
+               Price price,
+               Quantity qty);
+
+buyShares("GOOG", Quantity(800), Price(975.0));
+            </code></pre>
+                <pre class="fragment"><code data-trim>
+error: no matching function for call to 'buyShares'
+    buyShares("GOOG", Quantity(800), Price(975.0));
+    ^~~~~~~~~
+note: candidate function not viable: no known conversion from
+    'Quantity' to 'Price' for 2nd argument
+                </code></pre>
+            </section>
         </section>
         <section data-background="GOTO_bg.png">
             <h3>Value types</h3>
